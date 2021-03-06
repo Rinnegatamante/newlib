@@ -40,7 +40,23 @@
    previous versions of memcpy to suppport it as an alternative.  */
 
 /* NOTE: This ifdef MUST match the one in aeabi_memcpy-armv7a.S.  */
-#if defined (__ARM_ARCH_7A__) && defined (__ARM_FEATURE_UNALIGNED) && \
+#if defined(__vita__)
+/* Support the alias for the __aeabi_memcpy which may
+   assume memory alignment.  */
+void __aeabi_memcpy4 (void *dest, const void *source, size_t n)
+	_ATTRIBUTE ((alias ("__aeabi_memcpy")));
+
+void __aeabi_memcpy8 (void *dest, const void *source, size_t n)
+	_ATTRIBUTE ((alias ("__aeabi_memcpy")));
+
+/* Support the routine __aeabi_memcpy.  Can't alias to memcpy
+   because it's not defined in the same translation unit.  */
+void __aeabi_memcpy (void *dest, const void *source, size_t n)
+{
+  extern void *sceClibMemcpy (void *dest, const void *source, size_t n);
+  sceClibMemcpy (dest, source, n);
+}
+#elif defined (__ARM_ARCH_7A__) && defined (__ARM_FEATURE_UNALIGNED) && \
 	(defined (__ARM_NEON__) || !defined (__SOFTFP__))
 
 /* Defined in aeabi_memcpy-armv7a.S.  */

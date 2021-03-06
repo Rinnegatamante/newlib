@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#if defined (__OPTIMIZE_SIZE__) || defined (PREFER_SIZE_OVER_SPEED)
+#if defined (__OPTIMIZE_SIZE__) || defined (PREFER_SIZE_OVER_SPEED) || defined(__vita__)
   /* Leave this field blank.  So the memcpy() is not defined, and this will
      automatically pull in the default C definition of memcpy() from
      ../../string/memcpy.c.  No need to include this file explicitely.

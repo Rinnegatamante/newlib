@@ -56,7 +56,10 @@ _DEFUN (memcpy, (dst0, src0, len0),
 	_CONST _PTR __restrict src0 _AND
 	size_t len0)
 {
-#if defined(PREFER_SIZE_OVER_SPEED) || defined(__OPTIMIZE_SIZE__)
+#if defined(__vita__)
+  extern void *sceClibMemcpy (void *dest, const void *source, size_t n);
+  return sceClibMemcpy(dst0, src0, len0);
+#elif defined(PREFER_SIZE_OVER_SPEED) || defined(__OPTIMIZE_SIZE__)
   char *dst = (char *) dst0;
   char *src = (char *) src0;
 
